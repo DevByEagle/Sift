@@ -5,6 +5,7 @@
 #include "view.h"
 
 typedef enum {
+    TT_NONE = 0,
     TT_WRITE,
     TT_STRING,
 } Token_Type;
@@ -39,12 +40,15 @@ bool isword(char c) {
 }
 
 Token_Type get_token_type(char* str, size_t str_t) {
-
+    if (strncmp(str, "write", str_t) == 0) {
+        return TT_STRING;
+    }
+    return TT_NONE;
 }
 
 Token* lex(String_View view) {
     if (isalpha(*view.data)) {
-        char* word[128];
+        char word[128];
         size_t word_s = 0;
         word[word_s++] = *view.data;
         view = view_chop_left(view);
