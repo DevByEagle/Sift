@@ -72,7 +72,7 @@ bool isword(char c) {
 
 Token_Type get_token_type(char* str, size_t str_t) {
     if (strncmp(str, "write", str_t) == 0) {
-        return TT_STRING;
+        return TT_WRITE;
     }
     return TT_NONE;
 }
