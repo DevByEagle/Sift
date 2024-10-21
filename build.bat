@@ -1,5 +1,5 @@
 @echo off
-setlcoal
+setlocal
 
 gcc main.c -o sift -Werror -Wextra
 
