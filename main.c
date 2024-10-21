@@ -23,7 +23,7 @@ void execute_script(const char *filename);
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        fprintf(stderr, "Usage: %s <script_file>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <input.sift>\n", argv[0]);
         return 1;
     }
 
