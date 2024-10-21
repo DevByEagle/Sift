@@ -51,10 +51,25 @@ void execute_script(const char *filename) {
 
 void execute_command(const char *command) {
     if (strncmp(command, "print(", 6) == 0 && command[strlen(command) - 1] == ')') {
-        // Extract variable name from print(x)
-        char var_name[] = command + 6;
-        var_name[strlen(var_name - 1)] = '\0'; // Remove the closing parenthesis
-        printf("%p = %f\n", var_name, get_variable((const char*)var_name));
+        // Check for quotes first to print the string literal
+        const char *start = strchr(command, '"'); // Find the first quote
+        const char *end = strrchr(command, '"'); // Find the last quote
+
+        if (start && end && start != end) { // If both quotes are found
+            char extracted_text[MAX_LINE_LENGTH];
+            strncpy(extracted_text, start + 1, end - start - 1);
+            extracted_text[end - start - 1] = '\0'; // Null-terminate the extracted string
+            printf("%s\n", extracted_text); // Print the extracted text
+        } else {
+            // If quotes are not valid, check for variable name
+            char var_name[MAX_VAR_NAME];
+            strncpy(var_name, command + 6, sizeof(var_name) - 1);
+            var_name[sizeof(var_name) - 1] = '\0';
+            var_name[strlen(var_name) - 1] = '\0'; // Remove the closing parenthesis
+
+            double value = get_variable(var_name); // Get the variable value
+            printf("%d\n", (int)value); // Print variable name and its value
+        }
     } else if (strchr(command, '=')) {
         char var_name[MAX_VAR_NAME];
         char expr[256];
