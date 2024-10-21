@@ -50,7 +50,9 @@ void execute_script(const char *filename) {
 }
 
 void execute_command(const char *command) {
-    if (strncmp(command, "print(", 6) == 0 && command[strlen(command) - 1] == ')') {
+    if (strncmp(command, "exit", 4) == 0) {
+        exit(0); // Exit the program
+    } else if (strncmp(command, "print(", 6) == 0 && command[strlen(command) - 1] == ')') {
         // Check for quotes first to print the string literal
         const char *start = strchr(command, '"'); // Find the first quote
         const char *end = strrchr(command, '"'); // Find the last quote
